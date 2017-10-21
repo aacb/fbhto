@@ -1,0 +1,26 @@
+FBHTO INSTALLATION INSTRUCTIONS
+===============================
+
+fbhto has a simple make script to install it. If you use a Debian GNU/Linux
+machine, you just need to run as root:
+
+make
+
+and that's done.
+
+In some other cases, you may want to install everything under the /usr/local
+directory, for example. To do this, edit the Makefile and just change the
+variable:
+
+PREFIX?=
+
+to
+
+PREFIX?=/usr/local
+
+then run:
+
+make
+
+and that's done as well.
+

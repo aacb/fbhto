@@ -1,0 +1,10 @@
+# fbhto
+fbhto - From black hole to organized.
+
+fbhto use a directory as it was a blackhole, which will suck immediately the files it receives and move them to another place, in a organized manner.
+
+After moving the file to its chosen place, it can be post-processed, for example, to deduplicate it, saving space in the disk. The software to deduplicate is not included, but it can be called by the routine called posProcessa() that is in the file usr/lib/fbhto/fbhto-lib.sh
+
+
+
+
