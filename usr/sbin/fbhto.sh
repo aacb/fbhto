@@ -54,12 +54,12 @@ monitoraPasta() {
   trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
   while read linha; do
     trap vaiMasVolta SIGHUP SIGINT SIGTERM SIGQUIT
-    fNesteNivelDeDebugEscrever 2 "linha gerada pelo inotifywait: ""$linha"
+    fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     agora=$(date +%Y-%m-%d_%H.%M.%S-%s)
     arquivo=$(echo "$linha" |awk -F ";" '{ print $2 }')
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     fNesteNivelDeDebugEscrever 7 "arquivo que chegou ao bh: ""$arquivo"
-    if [[ "$pastaBh""/" != "$arquivo" ]]; then
+    if [[ ( "$pastaBh""/" != "$arquivo" ) && ( ! -d "$arquivo" ) ]]; then
       extensaoDoArquivo "$arquivo"
       recuperaMetatag "$arquivo"
       extraiFileTime
@@ -69,7 +69,7 @@ monitoraPasta() {
     fi
     [[ $houveInterrupcao == 1 ]] && fechaTudo
     trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
-  done < <(inotifywait -m -r -e close_write "$pasta" --format "%e;%w%f;" --quiet --fromfile "$arquivoComListaDeExclusao" --excludei "tmp$")
+  done < <(inotifywait -m -r -e close_write -e moved_to "$pasta" --format "%e;%w%f;" --quiet --fromfile "$arquivoComListaDeExclusao" --excludei "tmp$")
   trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
 }
 

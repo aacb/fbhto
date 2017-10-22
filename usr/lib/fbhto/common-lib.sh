@@ -46,9 +46,9 @@ fi
 #                                                  #
 # Ele deve ser um número inteiro maior que 0.      #
 ####################################################
-if [[ -z ${arquivoLog+x} ]]; then
-  # arquivoLog não é ainda uma variável declarada
-  arquivoLog="/var/log/fbhttrp.log"
+if [[ -z ${arquivoDeLog+x} ]]; then
+  # arquivoDeLog não é ainda uma variável declarada
+  arquivoDeLog="/var/log/fbhto.log"
 fi
 
 
@@ -69,7 +69,7 @@ fNesteNivelDeDebugEscrever() {
   if [[ $nivelLimiteDeDebugParaNaoEscreverNoLog > $localLevel ]]; then
     horario=$(date +%s"; "%Y.%m.%d-%Hh%Mm%Ss)
     printf "%s; %s; %s\n" "$script" "$horario" "$localMessage"
-    printf "%s; %s; %s\n" "$script" "$horario" "$localMessage" >>$arquivoLog
+    printf "%s; %s; %s\n" "$script" "$horario" "$localMessage" >>$arquivoDeLog
   fi
 }
 

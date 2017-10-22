@@ -49,8 +49,7 @@ recuperaMetatag() {
 extraiFileTime() {
   fileTime=""
   if [[ "$metaTag" != "" ]]; then
-    fileTime=$(echo "$metaTag" |sed -e 's#^.*\([1-9][0-9]\{3\}-[0-9]\{2\}-[0-9]\{2\}\_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}\).*$#\1#g')  # example: 2017-10-13
-echo oie
+    fileTime=$(echo "$metaTag" |sed -e 's#^.*\([1-9][0-9]\{3\}-[0-9]\{2\}-[0-9]\{2\}_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}\).*$#\1#g')  # example: 2017-10-13_19.52.15
   fi
 }
 
@@ -78,12 +77,12 @@ decideOndeColocar() {
   if [[ "$extensao" != "" ]]; then
     arquivoNoDestino="$arquivoNoDestino"'.'"$extensao"
   fi
-  fNesteNivelDeDebugEscrever 2 "arquivoNoDestino: ""$arquivoNoDestino"
+  fNesteNivelDeDebugEscrever 7 "arquivoNoDestino: ""$arquivoNoDestino"
   comando='mv -f "'"$arquivo"'" "'"$arquivoNoDestino"'"'
   # move the file to its organized place
-  echo "decideOndeColocar: ""$comando"
-  echo
   eval "$comando"
+  fNesteNivelDeDebugEscrever 0 "moved: ""$arquivo"" TO ""$arquivoNoDestino"
+  echo
 }
 
 posProcessa() {
