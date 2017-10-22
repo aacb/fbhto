@@ -1,5 +1,5 @@
 NAME=fbhto
-VERSION=0.2.0
+VERSION=0.2.2
 
 DIRS=etc usr
 INSTALL_DIRS=`find $(DIRS) -type d 2>/dev/null`
