@@ -4,6 +4,7 @@ FBHTO INSTALLATION INSTRUCTIONS
 fbhto has a simple make script to install it. If you use a Debian GNU/Linux
 machine, you just need to run as root:
 
+cd <fbhto-source-directory>
 make
 
 and that's done.
@@ -24,3 +25,10 @@ make
 
 and that's done as well.
 
+TO UNINSTALL
+============
+
+To uninstall fbhto, just run:
+
+cd <fbhto-source-directory>
+make uninstall
