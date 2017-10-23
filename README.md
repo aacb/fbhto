@@ -6,15 +6,17 @@
 
 ## How it works
 
-`fbhto` = From BlackHole To Organized.
+*fbhto* = From BlackHole To Organized.
 
 fbhto uses Linux inotify events to implement what we will call a blackhole: it
 is a directory that will suck the files it receives, and moves them to another
 place, in a organized manner.
 
-The idea is to have a place where we can move our new files, and then fbhto work
-as necessary to organize these files for us. It is strongly recommended to make
-some tests before starting your regular and serious use of fbhto.
+The idea is to have a place where we can move our new files, and then fbhto do 
+whatever is necessary to organize these files for us.
+
+*It is strongly recommended that you make some tests and carefully observe the
+results BEFORE YOU START your regular and serious use of fbhto.*
 
 
 ## Usage
@@ -29,22 +31,22 @@ automatically call fbhto.sh by the init.
 
 ## TODO
 
-`fbhto` can be improved to incorporate these features, and maybe others you
-suggest:
+*fbhto* is expected to be improved to incorporate those new features, and
+maybe others you suggest:
 
-* [ ] deduplicate the files processed by fbhto
+* [ ] deduplicate the files moved to the blackhole
 * [ ] allow regular users have their own configuration files at ~/fbhto/ and
 interpret them
-    * run another instance of fbhto to each user
+    * run another instance of fbhto for each user
     * monitor (using inotify as well) a signal from the user, asking for
-reading her/his conf files
+reading and interpreting her/his conf files
     * protect the user instance against privilege scalation
 
 
 ## Contributing
 
-Feel free to improve `fbhto`. Your pull-requests are welcome.
+Feel free to improve *fbhto*. Your pull-requests are welcome.
 
 ## LICENSE
 
-`fbhto` is licensed under GNU GPL 3.0
+*fbhto* is licensed under GNU GPL 3.0
