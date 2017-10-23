@@ -49,4 +49,4 @@ Feel free to improve *fbhto*. Your pull-requests are welcome.
 
 ## LICENSE
 
-*fbhto* is licensed under [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
+*fbhto* is licensed under [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.txt)
