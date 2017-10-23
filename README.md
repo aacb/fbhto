@@ -4,9 +4,8 @@
 > images, videos, docs and texts.
 
 
-How it works
-------------
-```
+## How it works
+
 `fbhto` = From BlackHole To Organized.
 
 fbhto uses Linux inotify events to implement what we will call a blackhole: it
@@ -18,23 +17,17 @@ as necessary to organize these files for us. It is strongly recommended to make
 some tests before starting your regular and serious use of fbhto.
 
 
-Usage
------
-```
+## Usage
+
 usage: fbhto.sh
 
-
-all the options are in the configuration files inside
-  /etc/fbhto/
-
+all options are in the configuration files inside /etc/fbhto/ directory.
 
 The file /usr/share/doc/fbhto/INSTALL contains instructions on how to
 automatically call fbhto.sh by the init.
 
 
-TODO
-----
-```
+## TODO
 
 `fbhto` can be improved to incorporate these features, and maybe others you
 suggest:
@@ -48,13 +41,10 @@ reading her/his conf files
     * protect the user instance against privilege scalation
 
 
-Contributing
-------------
-```
+## Contributing
 
 Feel free to improve `fbhto`. Your pull-requests are welcome.
 
-LICENSE
-------
+## LICENSE
 
 `fbhto` is licensed under GNU GPL 3.0
