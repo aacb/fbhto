@@ -25,8 +25,8 @@ usage: fbhto.sh
 
 all options are in the configuration files inside /etc/fbhto/ directory.
 
-The file /usr/share/doc/fbhto/INSTALL contains instructions on how to
-automatically call fbhto.sh by the init.
+The file /usr/share/doc/fbhto/INSTALL will contain the instructions on how to
+automatically call fbhto.sh by the init (at least for the systemd init).
 
 
 ## TODO
