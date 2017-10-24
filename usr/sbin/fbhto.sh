@@ -17,7 +17,9 @@
 ##
 ##  (c) 2017 by Antonio Augusto de Cintra Batista <antonio.a.c.batista@gmail.com>
 ##  Licensed under GNU GPL v3
-##  Version 0.2 - 2017-10-08
+##  Version 0.2.0 - 2017-10-08
+##  Version 0.2.3 - 2017-10-23
+##  Version 0.2.4 - 2017-10-24
 ##
 ####
 
@@ -82,8 +84,6 @@ apresentacao() {
 ###  main  ###
 ####      ####
 ##############
-
-pastaDeConfiguracao="/etc/fbhto/"
 
 # testa se as pastas existem
 [ -d "$pastaDeConfiguracao" ] || { mkdir -p "$pastaDeConfiguracao" ;touch "$arquivoComListaDeExclusao" ;}

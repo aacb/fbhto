@@ -5,16 +5,15 @@
 ################
 
 ####
-##  fbhto-move.sh
+##  fbhto-copy.sh
 ##  From black hole to organized
 ##  
-##  This is a user script. It will MOVE the file(s),
+##  This is a user script. It will COPY the file(s),
 ##  given as argument(s), to the directory that is
 ##  configured as the blackhole.
 ##
 ##  (c) 2017 by Antonio Augusto de Cintra Batista <antonio.a.c.batista@gmail.com>
 ##  Licensed under GNU GPL v3
-##  Version 0.2.3 - 2017-10-23
 ##  Version 0.2.4 - 2017-10-24
 ##
 ####
@@ -49,7 +48,7 @@ if [[ $# == 0 ]]; then
   cat <<EOF
 ERROR: you need to specify at least one file
 
-$nomeDoScript - MOVE the specified file(s) to the configured fbhto blackhole
+$nomeDoScript - COPY the specified file(s) to the configured fbhto blackhole
 
 The configured fbhto blackhole is at: $pastaBh
 
@@ -70,7 +69,7 @@ while [[ $tamanhoArgumento > 0 ]]; do
   if [[ "$argumento" =~ $regExpInvalidArguments ]]; then
     echo "Invalid argument: ""$argumento"
   else
-    comando="mv -f '""$argumento""' '""$pastaBh""'/."
+    comando="cp -a '""$argumento""' '""$pastaBh""'/."
     if [[ -e "$argumento" ]]; then
       echo "Blackholed this file: ""$argumento"
       eval "$comando"
