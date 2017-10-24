@@ -26,7 +26,7 @@
 ##  along with this program.  If not, see http://www.gnu.org/licenses/
 ##
 ####
-regExpImage='bmp$|fpx$|gif$|j2c$|j2k$|jfif$|jif$|jp2$|jpe?g$|jpx$|nef$|pbm$|pcd$|pgm$|png$|pnm$|ppm$|svg$|tif$|tiff$|xcf$'
+regExpImage='bmp$|fpx$|gif$|ico$|j2c$|j2k$|jfif$|jif$|jp2$|jpe?g$|jpx$|nef$|odg$|pbm$|pcd$|pgm$|png$|pnm$|ppm$|svg$|tif$|tiff$|xcf$'
 regExpVideo='avi$|dhmov$|dvx$|f4v$|flv$|gifv$|gvi$|gvp$|h264$|hdv$|ivr$|ivs$|m15$|m1v$|m21$|m2ts?$|m2v$|m4e$|m4v$|m75$|mgv$|mjp$|mjpe?g$|mk3d$|mkv$|mob$|mov$|movie$|mp21$|mp2v$|mp4$|mp4v$|mpe$|mpe?g$|mpeg[124]$|mpg[24]$|og[mvx]$|qtm?$|rm$|rv$|thm$|vid$|vob$|vro$|webm$|wm$|wmv$|wvm$|xvid$|3gp$'
 regExpOffice='docx?$|odp$|ods$|odt$|pdf$|pptx?$|ps$|rtf$|sxw$|tex$|wp$|wp[d7]$|xlsx?$'
 regExpText='te?xt$|asc$'
