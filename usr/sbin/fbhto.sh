@@ -51,6 +51,7 @@ done </etc/fbhto/fbhto.conf
 
 monitoraPasta() {
   # inotify events: modify attrib moved_to moved_from move_self create delete delete_self unmount
+  deviceNumberBh=$(stat -c '%d' "$pastaBh")
   local pasta="$1"
   houveInterrupcao=0
   trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
@@ -59,6 +60,7 @@ monitoraPasta() {
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     agora=$(date +%Y-%m-%d_%H.%M.%S-%s)
     arquivo=$(echo "$linha" |awk -F ";" '{ print $2 }')
+    deviceNumberArquivo=$(stat -c '%d' "$arquivo")
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     fNesteNivelDeDebugEscrever 0 "arquivo que chegou ao bh: ""$arquivo"
     fNesteNivelDeDebugEscrever 0 "pastaBh/: ""$pastaBh""/"
@@ -69,6 +71,15 @@ monitoraPasta() {
       decideOndeColocar "$arquivo"
       posProcessa "$arquivoNoDestino"
       # echo "$agora"";""$arquivo"" transferido para ""$pastaDestino" >> "$arquivoDeLog"
+    elif [[ -d "$arquivo" ]]; then
+      # $arquivo Ã uma pasta
+      while IFS= read -d $'\0' -r arq ; do
+        extensaoDoArquivo "$arq"
+        recuperaMetatag "$arq"
+        extraiFileTime
+        decideOndeColocar "$arq"
+        posProcessa "$arquivoNoDestino"
+      done < <(find "$arquivo" -type f -print0)
     fi
     [[ $houveInterrupcao == 1 ]] && fechaTudo
     trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
