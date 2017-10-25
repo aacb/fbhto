@@ -60,7 +60,8 @@ monitoraPasta() {
     agora=$(date +%Y-%m-%d_%H.%M.%S-%s)
     arquivo=$(echo "$linha" |awk -F ";" '{ print $2 }')
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
-    fNesteNivelDeDebugEscrever 7 "arquivo que chegou ao bh: ""$arquivo"
+    fNesteNivelDeDebugEscrever 0 "arquivo que chegou ao bh: ""$arquivo"
+    fNesteNivelDeDebugEscrever 0 "pastaBh/: ""$pastaBh""/"
     if [[ ( "$pastaBh""/" != "$arquivo" ) && ( ! -d "$arquivo" ) ]]; then
       extensaoDoArquivo "$arquivo"
       recuperaMetatag "$arquivo"
