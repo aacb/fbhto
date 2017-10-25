@@ -71,8 +71,8 @@ monitoraPasta() {
       decideOndeColocar "$arquivo"
       posProcessa "$arquivoNoDestino"
       # echo "$agora"";""$arquivo"" transferido para ""$pastaDestino" >> "$arquivoDeLog"
-    elif [[ -d "$arquivo" ]]; then
-      # $arquivo � uma pasta
+    elif [[ ( -d "$arquivo" ) && ( $deviceNumberArquivo == $deviceNumberBh ]]; then
+      # $arquivo é uma pastae estáno mesmo device number que o blackhole
       while IFS= read -d $'\0' -r arq ; do
         extensaoDoArquivo "$arq"
         recuperaMetatag "$arq"
