@@ -60,26 +60,28 @@ monitoraPasta() {
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     agora=$(date +%Y-%m-%d_%H.%M.%S-%s)
     arquivo=$(echo "$linha" |awk -F ";" '{ print $2 }')
-    deviceNumberArquivo=$(stat -c '%d' "$arquivo")
-    fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
-    fNesteNivelDeDebugEscrever 0 "arquivo que chegou ao bh: ""$arquivo"
-    fNesteNivelDeDebugEscrever 0 "pastaBh/: ""$pastaBh""/"
-    if [[ ( "$pastaBh""/" != "$arquivo" ) && ( ! -d "$arquivo" ) ]]; then
-      extensaoDoArquivo "$arquivo"
-      recuperaMetatag "$arquivo"
-      extraiFileTime
-      decideOndeColocar "$arquivo"
-      posProcessa "$arquivoNoDestino"
-      # echo "$agora"";""$arquivo"" transferido para ""$pastaDestino" >> "$arquivoDeLog"
-    elif [[ ( -d "$arquivo" ) && ( $deviceNumberArquivo == $deviceNumberBh ]]; then
-      # $arquivo é uma pastae estáno mesmo device number que o blackhole
-      while IFS= read -d $'\0' -r arq ; do
-        extensaoDoArquivo "$arq"
-        recuperaMetatag "$arq"
+    if ! [[ "$arquivo" =~ \.part$ || "$(basename "$arquivo")" == "$(basename "$arquivoListaDeNovidades")" ]]; then
+      deviceNumberArquivo=$(stat -c '%d' "$arquivo")
+      fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
+      fNesteNivelDeDebugEscrever 0 "arquivo que chegou ao bh: ""$arquivo"
+      fNesteNivelDeDebugEscrever 5 "pastaBh/: ""$pastaBh""/"
+      if [[ ( "$pastaBh""/" != "$arquivo" ) && ( ! -d "$arquivo" ) ]]; then
+        extensaoDoArquivo "$arquivo"
+        recuperaMetatag "$arquivo"
         extraiFileTime
-        decideOndeColocar "$arq"
+        decideOndeColocar "$arquivo"
         posProcessa "$arquivoNoDestino"
-      done < <(find "$arquivo" -type f -print0)
+        # echo "$agora"";""$arquivo"" transferido para ""$pastaDestino" >> "$arquivoDeLog"
+      elif [[ ( -d "$arquivo" ) && ( $deviceNumberArquivo == $deviceNumberBh ) ]]; then
+        # $arquivo é uma pastae estáno mesmo device number que o blackhole
+        while IFS= read -d $'\0' -r arq ; do
+          extensaoDoArquivo "$arq"
+          recuperaMetatag "$arq"
+          extraiFileTime
+          decideOndeColocar "$arq"
+          posProcessa "$arquivoNoDestino"
+        done < <(find "$arquivo" -type f -print0)
+      fi
     fi
     [[ $houveInterrupcao == 1 ]] && fechaTudo
     trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
@@ -105,11 +107,29 @@ apresentacao() {
 [ -d "$pastaDestinoIncerto" ] || mkdir -p "$pastaDestinoIncerto"
 [ -d "$pastaBaseDeLog" ] || mkdir -p "$pastaBaseDeLog"
 
+if [[ "$(which exiftool)" == "" ]]; then
+  echo
+  echo "ERRO!!! exiftool não foi instalado ainda."
+  echo "Em sistemas Debian GNU/Linux é necessário instalar o pacote libimage-exiftool-perl"
+  echo "ERRO!!! exiftool não foi instalado ainda." >>"$arquivoDeLog"
+  echo "Em sistemas Debian GNU/Linux é necessário instalar o pacote libimage-exiftool-perl" >>"$arquivoDeLog"
+  exit 1
+fi
+
+if [[ "$(which inotifywait)" == "" ]]; then
+  echo
+  echo "ERRO!!! inotifywait não foi instalado ainda."
+  echo "Em sistemas Debian GNU/Linux é necessário instalar o pacote inotify-tools"
+  echo "ERRO!!! inotifywait não foi instalado ainda." >>"$arquivoDeLog"
+  echo "Em sistemas Debian GNU/Linux é necessário instalar o pacote inotify-tools" >>"$arquivoDeLog"
+  exit 1
+fi
+
 if [ -e "$pastaBh" ]; then
   if [ ! -d "$pastaBh" ]; then
     echo
-    echo "ERRO!!! Favor verificar:"  >2
-    echo "$pastaBh"" existe e deveria ser um diretório, mas não é." >2
+    echo "ERRO!!! Favor verificar:"
+    echo "$pastaBh"" existe e deveria ser um diretório, mas não é."
     echo "ERRO!!! Favor verificar:" >>"$arquivoDeLog"
     echo "$pastaBh"" existe e deveria ser um diretório, mas não é." >>"$arquivoDeLog"
     echo

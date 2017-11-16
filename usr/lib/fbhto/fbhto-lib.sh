@@ -27,7 +27,8 @@
 ##
 ####
 regExpImage='bmp$|fpx$|gif$|ico$|j2c$|j2k$|jfif$|jif$|jp2$|jpe?g$|jpx$|nef$|odg$|pbm$|pcd$|pgm$|png$|pnm$|ppm$|svg$|tif$|tiff$|xcf$'
-regExpVideo='avi$|dhmov$|dvx$|f4v$|flv$|gifv$|gvi$|gvp$|h264$|hdv$|ivr$|ivs$|m15$|m1v$|m21$|m2ts?$|m2v$|m4e$|m4v$|m75$|mgv$|mjp$|mjpe?g$|mk3d$|mkv$|mob$|mov$|movie$|mp21$|mp2v$|mp4$|mp4v$|mpe$|mpe?g$|mpeg[124]$|mpg[24]$|og[mvx]$|qtm?$|rm$|rv$|thm$|vid$|vob$|vro$|webm$|wm$|wmv$|wvm$|xvid$|3gp$'
+regExpVideo='avi$|dhmov$|dvx$|f4v$|flv$|gifv$|gvi$|gvp$|h264$|hdv$|ivr$|ivs$|m15$|m1v$|m21$|m2ts?$|m2v$|m4e$|m4v$|m75$|mgv$|mjp$|mjpe?g$|mk3d$|mkv$|mob$|mov$|movie$|mp21$|mp2v$|mp4$|mp4v$|mpe$|mpe?g$|mpeg[124]$|mpg[24]$|og[mvx]$|qtm?$|rm$|rv$|thm$|vid$|vob$|vro$|webm$|wm$|wmv$|wvm$|xvid$|3gp$|ogg$|ogx$'
+regExpAudio='mp3$|m4a$|wav$|gsm$|aiff$|3gp$|aac$|au$|flac$|m4b$|mpc$|sln$|vox$|wma$|oga$|cda$'
 regExpOffice='docx?$|odp$|ods$|odt$|pdf$|pptx?$|ps$|rtf$|sxw$|tex$|wp$|wp[d7]$|xlsx?$'
 regExpText='te?xt$|asc$'
 
@@ -63,6 +64,8 @@ decideOndeColocar() {
     pastaParaExtensao="text"
   elif [[ $extensaoParaComparacao =~ $regExpVideo ]]; then
     pastaParaExtensao="video"
+  elif [[ $extensaoParaComparacao =~ $regExpAudio ]]; then
+    pastaParaExtensao="audio"
   else
     pastaParaExtensao="other-file-types"
   fi
@@ -87,5 +90,8 @@ decideOndeColocar() {
 
 posProcessa() {
   local arquivoNoDestino="$1"
+  echo "$arquivoNoDestino" |sed -e 's#/var/snap/nextcloud/common/nextcloud/data/antonio/files\(.*\)$#\1#g' >>"$arquivoListaDeNovidades"
+  ( /snap/bin/nextcloud.occ files:scan antonio ) 1>/dev/null 2>/dev/null
+  ( /snap/bin/nextcloud.occ files:scan imvm ) 1>/dev/null 2>/dev/null
 }
 
