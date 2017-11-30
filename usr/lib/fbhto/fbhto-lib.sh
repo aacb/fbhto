@@ -69,7 +69,7 @@ decideOndeColocar() {
   else
     pastaParaExtensao="other-file-types"
   fi
-  nomeDoArquivo=$(basename "$arquivo" |sed -e 's#\(.*\)\.'$extensao'#\1#g')
+  nomeDoArquivo=$(basename "$arquivo" |sed -e 's#\(.*\)\.'"$extensao"'#\1#g')
   if [[ "$fileTime" != "" ]]; then
     destinoFinal="$pastaDestino"'/'$pastaParaExtensao'/'${fileTime:0:4}'/'${fileTime:5:2}'/'${fileTime:8:2}
     [ -d "$destinoFinal" ] || mkdir -p "$destinoFinal"

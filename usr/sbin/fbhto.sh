@@ -32,7 +32,7 @@ source /usr/lib/fbhto/fbhto-lib.sh
 # regular expression: expected configuration line sintax
 regExpConf='^[a-zA-Z0-9\._-]+=[a-zA-Z0-9\.\$/_"-]'
 numLinha=0
-while read linha; do
+while read -r linha; do
   ((numLinha++))
   linha=$(echo "$linha" |sed -e 's#^[[:space:]]*##g' |sed -e 's/^\(.*\)#.*$/\1/g' |sed -e 's#[[:space:]]*$##g')
   if [[ "${linha:0:1}" != "#" && "${linha:0:1}" != "" ]]; then
@@ -55,7 +55,7 @@ monitoraPasta() {
   local pasta="$1"
   houveInterrupcao=0
   trap fechaTudo SIGHUP SIGINT SIGTERM SIGQUIT
-  while read linha; do
+  while read -r linha; do
     trap vaiMasVolta SIGHUP SIGINT SIGTERM SIGQUIT
     fNesteNivelDeDebugEscrever 7 "linha gerada pelo inotifywait: ""$linha"
     agora=$(date +%Y-%m-%d_%H.%M.%S-%s)
@@ -72,7 +72,7 @@ monitoraPasta() {
         decideOndeColocar "$arquivo"
         posProcessa "$arquivoNoDestino"
         # echo "$agora"";""$arquivo"" transferido para ""$pastaDestino" >> "$arquivoDeLog"
-      elif [[ ( -d "$arquivo" ) && ( $deviceNumberArquivo == $deviceNumberBh ) ]]; then
+      elif [[ ( -d "$arquivo" ) && ( $deviceNumberArquivo -eq $deviceNumberBh ) ]]; then
         # $arquivo é uma pastae estáno mesmo device number que o blackhole
         while IFS= read -d $'\0' -r arq ; do
           extensaoDoArquivo "$arq"

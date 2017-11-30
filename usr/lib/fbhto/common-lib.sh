@@ -65,7 +65,9 @@ fAgora() {
 }
 
 fNesteNivelDeDebugEscrever() {
-  local localLevel="$1" localMessage="$2" tempo=`date +%s"; "%Y.%m.%d-%Hh%Mm%Ss` script="$(basename "$0")"
+  local localLevel="$1" localMessage="$2" tempo="" script=""
+  tempo=$(date +%s"; "%Y.%m.%d-%Hh%Mm%Ss)
+  script="$(basename "$0")"
   if [[ $nivelLimiteDeDebugParaNaoEscreverNoLog > $localLevel ]]; then
     horario=$(date +%s"; "%Y.%m.%d-%Hh%Mm%Ss)
     printf "%s; %s; %s\n" "$script" "$horario" "$localMessage"
@@ -101,7 +103,7 @@ fechaTudo() {
   echo -n "Fechando tudo ... "
   echo "OK."
   kill -- -$$
-  exit $1
+  exit 1
 }
 
 

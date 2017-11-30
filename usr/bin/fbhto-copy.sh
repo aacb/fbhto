@@ -65,7 +65,7 @@ fi
 regExpInvalidArguments='[;|&<>`$]'
 argumento="$1"
 tamanhoArgumento=${#argumento}
-while [[ $tamanhoArgumento > 0 ]]; do
+while [[ $tamanhoArgumento -gt 0 ]]; do
   if [[ "$argumento" =~ $regExpInvalidArguments ]]; then
     echo "Invalid argument: ""$argumento"
   else

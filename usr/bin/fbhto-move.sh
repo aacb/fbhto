@@ -28,7 +28,7 @@ source /usr/lib/fbhto/fbhto-lib.sh
 # regular expression: expected configuration line sintax
 regExpConf='^[a-zA-Z0-9\._-]+=[a-zA-Z0-9\.\$/_"-]'
 numLinha=0
-while read linha; do
+while read -r linha; do
   ((numLinha++))
   linha=$(echo "$linha" |sed -e 's#^[[:space:]]*##g' |sed -e 's/^\(.*\)#.*$/\1/g' |sed -e 's#[[:space:]]*$##g')
   if [[ "${linha:0:1}" != "#" && "${linha:0:1}" != "" ]]; then
@@ -66,7 +66,7 @@ fi
 regExpInvalidArguments='[;|&<>`$]'
 argumento="$1"
 tamanhoArgumento=${#argumento}
-while [[ $tamanhoArgumento > 0 ]]; do
+while [[ $tamanhoArgumento -gt 0 ]]; do
   if [[ "$argumento" =~ $regExpInvalidArguments ]]; then
     echo "Invalid argument: ""$argumento"
   else
