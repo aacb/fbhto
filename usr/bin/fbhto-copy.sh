@@ -44,7 +44,7 @@ while read linha; do
   fi
 done </etc/fbhto/fbhto.conf
 
-if [[ $# == 0 ]]; then
+if [[ $# -eq 0 ]]; then
   cat <<EOF
 ERROR: you need to specify at least one file
 

@@ -68,7 +68,7 @@ fNesteNivelDeDebugEscrever() {
   local localLevel="$1" localMessage="$2" tempo="" script=""
   tempo=$(date +%s"; "%Y.%m.%d-%Hh%Mm%Ss)
   script="$(basename "$0")"
-  if [[ $nivelLimiteDeDebugParaNaoEscreverNoLog > $localLevel ]]; then
+  if [[ $nivelLimiteDeDebugParaNaoEscreverNoLog -gt $localLevel ]]; then
     horario=$(date +%s"; "%Y.%m.%d-%Hh%Mm%Ss)
     printf "%s; %s; %s\n" "$script" "$horario" "$localMessage"
     printf "%s; %s; %s\n" "$script" "$horario" "$localMessage" >>$arquivoDeLog
