@@ -91,7 +91,7 @@ decideOndeColocar() {
 posProcessa() {
   local arquivoNoDestino="$1"
   echo "$arquivoNoDestino" |sed -e 's#/var/snap/nextcloud/common/nextcloud/data/antonio/files\(.*\)$#\1#g' >>"$arquivoListaDeNovidades"
-  ( /snap/bin/nextcloud.occ files:scan antonio ) 1>/dev/null 2>/dev/null
-  ( /snap/bin/nextcloud.occ files:scan imvm ) 1>/dev/null 2>/dev/null
+  ( /snap/bin/nextcloud.occ files:scan "$bhAccName" ) 1>/dev/null 2>/dev/null
+  ( /snap/bin/nextcloud.occ files:scan "$destAccName" ) 1>/dev/null 2>/dev/null
 }
 
