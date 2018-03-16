@@ -56,11 +56,11 @@ extraiFileTime() {
 decideOndeColocar() {
   local arquivo="$1"
   if   [[ $extensaoParaComparacao =~ $regExpImage ]]; then
-    pastaParaExtensao="image"
+    pastaParaExtensao="imagem"
   elif [[ $extensaoParaComparacao =~ $regExpOffice ]]; then
     pastaParaExtensao="office"
   elif [[ $extensaoParaComparacao =~ $regExpText ]]; then
-    pastaParaExtensao="text"
+    pastaParaExtensao="texto"
   elif [[ $extensaoParaComparacao =~ $regExpVideo ]]; then
     pastaParaExtensao="video"
   else
@@ -87,5 +87,7 @@ decideOndeColocar() {
 
 posProcessa() {
   local arquivoNoDestino="$1"
+  /snap/bin/nextcloud.occ files:scan "$bhAccName"
+  /snap/bin/nextcloud.occ files:scan "$destAccName"
 }
 
