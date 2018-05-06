@@ -43,11 +43,17 @@ extensaoDoArquivo() {
 
 recuperaMetatag() {
   local arquivo="$1"
-  metaTag=$(exiftool -d %Y-%m-%d_%H.%M.%S "$arquivo" |grep -i date |grep '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}' |awk -F ":" '{ print $2 }' |sort -n |head -1)
+  if [ "$extensaoParaComparacao" = "part" ]; then
+    return
+  fi
+  metaTag=$(exiftool -d %Y-%m-%d_%H.%M.%S "$arquivo" |grep -i date |egrep -vi '^zip|^link' |grep '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}' |awk -F ":" '{ print $2 }' |sort -n |head -1)
 }
 
 extraiFileTime() {
   fileTime=""
+  if [ "$extensaoParaComparacao" = "part" ]; then
+    return
+  fi
   if [[ "$metaTag" != "" ]]; then
     fileTime=$(echo "$metaTag" |sed -e 's#^.*\([1-9][0-9]\{3\}-[0-9]\{2\}-[0-9]\{2\}_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}\).*$#\1#g')  # example: 2017-10-13_19.52.15
   fi
@@ -55,6 +61,9 @@ extraiFileTime() {
 
 decideOndeColocar() {
   local arquivo="$1"
+  if [ "$extensaoParaComparacao" = "part" ]; then
+    return
+  fi
   if   [[ $extensaoParaComparacao =~ $regExpImage ]]; then
     pastaParaExtensao="imagem"
   elif [[ $extensaoParaComparacao =~ $regExpOffice ]]; then
@@ -80,6 +89,7 @@ decideOndeColocar() {
   fNesteNivelDeDebugEscrever 7 "arquivoNoDestino: ""$arquivoNoDestino"
   comando='mv -f "'"$arquivo"'" "'"$arquivoNoDestino"'"'
   # move the file to its organized place
+  sleep 1
   eval "$comando"
   fNesteNivelDeDebugEscrever 0 "moved: ""$arquivo"" TO ""$arquivoNoDestino"
   echo
@@ -87,6 +97,9 @@ decideOndeColocar() {
 
 posProcessa() {
   local arquivoNoDestino="$1"
+  if [ "$extensaoParaComparacao" = "part" ]; then
+    return
+  fi
   /snap/bin/nextcloud.occ files:scan "$bhAccName"
   /snap/bin/nextcloud.occ files:scan "$destAccName"
 }
