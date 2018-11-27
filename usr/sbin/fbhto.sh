@@ -26,6 +26,21 @@
 source /usr/lib/fbhto/common-lib.sh
 source /usr/lib/fbhto/fbhto-lib.sh
 
+if [ $# -eq 0 ]; then
+  arquivoDeConfiguracao="/etc/fbhto/fbhto.conf"
+else
+  arquivoDeConfiguracao="$1"
+  if [ ! -e "$arquivoDeConfiguracao" ]; then
+    cat >> /dev/stderr << EOF
+
+      ERRO!!! O arquivo de configuração fornecido não foi encontrado:
+      "$arquivoDeConfiguracao"
+
+EOF
+    exit 2
+  fi
+fi
+
 ###
 # read the configuration files
 ###
@@ -42,12 +57,12 @@ while read linha; do
       fNesteNivelDeDebugEscrever 7 "linha $numLinha: ""$linha"
       eval "$linha"
     else
-      fNesteNivelDeDebugEscrever 0 "SINTAX ERROR found at line $numLinha of /etc/fbhto/fbhto.conf"
+      fNesteNivelDeDebugEscrever 0 "SINTAX ERROR found at line $numLinha of $arquivoDeConfiguracao"
       fNesteNivelDeDebugEscrever 0 "$linha"
       exit 1
     fi
   fi
-done </etc/fbhto/fbhto.conf
+done <$arquivoDeConfiguracao
 
 monitoraPasta() {
   # inotify events: modify attrib moved_to moved_from move_self create delete delete_self unmount
