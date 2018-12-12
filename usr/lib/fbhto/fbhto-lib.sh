@@ -39,6 +39,7 @@ extensaoDoArquivo() {
     extensao="${arquivo##*.}"
     extensaoParaComparacao=$(echo "$extensao" |tr '[:upper:]' '[:lower:]')
   fi
+  nomeDoArquivo=$(basename "$arquivo" |sed -e 's#\(.*\)\.'$extensao'#\1#g')
 }
 
 recuperaMetatag() {
@@ -54,7 +55,9 @@ extraiFileTime() {
   if [ "$extensaoParaComparacao" = "part" ]; then
     return
   fi
-  if [[ "$metaTag" != "" ]]; then
+  if [[ $nomeDoArquivo =~ ^WhatsApp ]]; then
+    fileTime=$(echo $nomeDoArquivo |sed -e 's#.*\([1-9][0-9]\{3\}-[0-9]\{2\}-[0-9]\{2\}\).*\([0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}\).*#\1_\2#g')
+  elif [[ "$metaTag" != "" ]]; then
     fileTime=$(echo "$metaTag" |sed -e 's#^.*\([1-9][0-9]\{3\}-[0-9]\{2\}-[0-9]\{2\}_[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}\).*$#\1#g')  # example: 2017-10-13_19.52.15
   fi
 }
@@ -75,7 +78,6 @@ decideOndeColocar() {
   else
     pastaParaExtensao="other-file-types"
   fi
-  nomeDoArquivo=$(basename "$arquivo" |sed -e 's#\(.*\)\.'$extensao'#\1#g')
   if [[ "$fileTime" != "" ]]; then
     destinoFinal="$pastaDestino"'/'$pastaParaExtensao'/'${fileTime:0:4}'/'${fileTime:5:2}'/'${fileTime:8:2}
     [ -d "$destinoFinal" ] || mkdir -p "$destinoFinal"
